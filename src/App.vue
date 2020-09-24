@@ -1,28 +1,53 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <timer v-for="item in timers" :key="item" />
+    <div>
+      <add-timer :add="addTimer" />
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Timer from './components/Timer/Timer';
+import AddTimer from './components/AddTimer/AddTimer';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Timer,
+    AddTimer
+  },
+  data() {
+    return {
+      timers: [1]
+    };
+  },
+  methods: {
+    addTimer() {
+      const timersCount = this.timers.length;
+      const lastItem = this.timers[timersCount - 1];
+      const newItem = lastItem + 1;
+      const newArr = [...this.timers, newItem];
+      this.timers = newArr;
+    }
   }
-}
+};
 </script>
 
 <style>
+@font-face {
+  font-family: Gotham Pro;
+  src: url(./assets/fonts/GothamPro-Light.ttf);
+}
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
   margin-top: 60px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  font-family: 'Gotham Pro';
+}
+
+.right {
+  transform: translate3d(10px, 0px, 0px);
 }
 </style>
